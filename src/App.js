@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef } from "react";
+import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import proj4 from "proj4";
 
-function App() {
+import turkeyGeoJSON from "./tr-cities.json";
+
+proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
+const TurkeyMap = () => {
+  const mapRef = useRef();
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.flyTo([39.9255, 32.8609], 6);
+    }
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MapContainer
+      center={[39.9255, 32.8609]}
+      zoom={6}
+      style={{ height: "100vh", width: "100%" }}
+      ref={mapRef}
+    >
+      <TileLayer
+        url={process.env.PUBLIC_URL + "/map.png"}
+        opacity={1}
+        zIndex={0}
+      />
+      <GeoJSON
+        data={turkeyGeoJSON}
+        style={() => ({
+          color: "black",
+          weight: 1,
+          fillColor: "transparent",
+        })}
+      />{" "}
+    </MapContainer>
   );
-}
+};
 
-export default App;
+export default TurkeyMap;

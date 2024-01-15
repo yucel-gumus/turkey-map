@@ -12,6 +12,18 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.map-container {
+  position: relative;
+}
+
+.city-popup {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
 
 .App-header {
   background-color: #282c34;
